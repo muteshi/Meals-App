@@ -1,17 +1,13 @@
 import React from "react";
 import Constants from "expo-constants";
-import { StyleSheet, SafeAreaView } from "react-native";
+import styled from "styled-components/native";
 
-function Screen({ children, style }) {
-  return <SafeAreaView style={[styles.screen, style]}>{children}</SafeAreaView>;
-}
+const SafeArea = styled.SafeAreaView`
+  flex: 1;
+  padding-top: ${Constants.statusBarHeight}px;
+  background-color: grey;
+`;
 
-const styles = StyleSheet.create({
-  screen: {
-    flex: 1,
-    paddingTop: Constants.statusBarHeight,
-    backgroundColor: "grey",
-  },
-});
-
-export default Screen;
+export const Screen = ({ children }) => {
+  return <SafeArea>{children}</SafeArea>;
+};

@@ -1,7 +1,7 @@
 import React from "react";
 // import { StyleSheet } from "react-native";
 
-import Screen from "./src/utils/Screen";
+import { Screen } from "./src/utils/Screen";
 import { RestaurantScreen } from "./src/components/features/restaurants/screens/restaurant.screen";
 
 function App(props) {
@@ -11,9 +11,4 @@ function App(props) {
     </Screen>
   );
 }
-
-// const styles = StyleSheet.create({
-//   container: {},
-// });
-
 export default App;
