@@ -5,13 +5,13 @@ import { Searchbar } from "react-native-paper";
 import { RestaurantCardComponent } from "../components/restaurant-card";
 
 const SearchContainer = styled.View`
-  padding: 16px;
-  background-color: white;
+  padding: ${({ theme }) => theme.sizes[0]};
+  background-color: ${({ theme }) => theme.colors.ui.white};
 `;
 const RestaurantListContainer = styled.View`
-  background-color: orange;
+  background-color: ${({ theme }) => theme.colors.ui.white};
   flex: 1;
-  padding: 10px;
+  padding: ${({ theme }) => theme.sizes[0]};
 `;
 
 export const RestaurantScreen = (props) => {
