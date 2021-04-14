@@ -7,6 +7,7 @@ import { RestaurantCardComponent } from "../components/restaurant-card";
 const SearchContainer = styled.View`
   padding: ${({ theme }) => theme.sizes[0]};
   background-color: ${({ theme }) => theme.colors.ui.white};
+  font-family: ${({ theme }) => theme.fonts.body};
 `;
 const RestaurantListContainer = styled.View`
   background-color: ${({ theme }) => theme.colors.ui.white};
