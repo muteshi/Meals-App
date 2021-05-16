@@ -1,10 +1,12 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import styled from "styled-components/native";
 
 import { Searchbar } from "react-native-paper";
 import { RestaurantCardComponent } from "../components/restaurant-card";
 import { FlatList } from "react-native";
 import { ListItemSeparator } from "../../../common/ListItemSeparator";
+import { RestaurantContext } from "../../../../services/restaurants/RestaurantContext";
+import { Screen } from "../../../../utils/Screen";
 
 const SearchContainer = styled.View`
   padding: ${({ theme }) => theme.sizes[0]};
@@ -17,7 +19,7 @@ const RestaurantListContainer = styled.View`
   padding: ${({ theme }) => theme.sizes[0]};
 `;
 
-const restaurants = [
+const restaurantsData = [
   {
     name: "Kite Restaurant",
     icon:
@@ -73,8 +75,10 @@ const restaurants = [
 export const RestaurantScreen = (props) => {
   const [searchQuery, setSearchQuery] = useState("");
   const onChangeSearch = (query) => setSearchQuery(query);
+  const { restaurants, loading, error } = useContext(RestaurantContext);
+
   return (
-    <>
+    <Screen>
       <SearchContainer>
         <Searchbar
           placeholder="Search"
@@ -85,19 +89,21 @@ export const RestaurantScreen = (props) => {
       <FlatList
         data={restaurants}
         ItemSeparatorComponent={ListItemSeparator}
-        keyExtractor={(h) => h.name}
-        renderItem={({ item }) => (
-          <RestaurantCardComponent
-            name={item.name}
-            icon={item.icon}
-            photos={item.photos[0]}
-            isClosedTemporarily={item.isClosedTemporarily}
-            address={item.address}
-            isOpenNow={item.isOpenNow}
-            rating={item.rating}
-          />
-        )}
+        keyExtractor={(item) => item.name}
+        renderItem={({ item }) => {
+          return (
+            <RestaurantCardComponent
+              name={item.name}
+              icon={item.icon}
+              photos={item.photos[0]}
+              isClosedTemporarily={item.isClosedTemporarily}
+              address={item.vicinity}
+              isOpenNow={item.isOpenNow}
+              rating={item.rating}
+            />
+          );
+        }}
       />
-    </>
+    </Screen>
   );
 };
