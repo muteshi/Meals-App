@@ -44,8 +44,8 @@ export const RestaurantCardComponent = ({
   address,
   isOpenNow,
   rating,
+  placeId,
 }) => {
-  console.log("card===>", name);
   const ratingArray = Array.from(new Array(Math.floor(rating)));
 
   return (
@@ -56,7 +56,12 @@ export const RestaurantCardComponent = ({
         <Icons>
           <Rating>
             {ratingArray.map((rate, index) => (
-              <SvgXml xml={star} width={20} height={20} key={index} />
+              <SvgXml
+                xml={star}
+                width={20}
+                height={20}
+                key={`star-${placeId}-${index}`}
+              />
             ))}
           </Rating>
           {isClosedTemporarily && (
