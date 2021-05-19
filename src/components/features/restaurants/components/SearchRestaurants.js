@@ -9,7 +9,10 @@ const SearchContainer = styled.View`
   font-family: ${({ theme }) => theme.fonts.body};
 `;
 
-export const SearchRestaurants = () => {
+export const SearchRestaurants = ({
+  isFavoritesToggled,
+  onFavoritesToggle,
+}) => {
   const { keyword, search } = useContext(LocationContext);
   const [searchQuery, setSearchQuery] = useState(keyword);
 
@@ -24,6 +27,8 @@ export const SearchRestaurants = () => {
   return (
     <SearchContainer>
       <Searchbar
+        icon={isFavoritesToggled ? "heart" : "heart-outline"}
+        onIconPress={onFavoritesToggle}
         placeholder="Enter location to search..."
         onChangeText={onChangeSearch}
         onSubmitEditing={() => {

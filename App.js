@@ -10,6 +10,7 @@ import { theme } from "./src/infrastructure/theme";
 import { RestaurantContextProvider } from "./src/services/restaurants/RestaurantContext";
 import { LocationContextProvider } from "./src/services/location/LocationContext";
 import { Navigation } from "./src/infrastructure/navigation";
+import { FavoritesContextProvider } from "./src/services/favorites/FavoritesContext";
 
 function App() {
   const [robotoLoaded] = useRoboto({
@@ -24,11 +25,13 @@ function App() {
 
   return (
     <ThemeProvider theme={theme}>
-      <LocationContextProvider>
-        <RestaurantContextProvider>
-          <Navigation />
-        </RestaurantContextProvider>
-      </LocationContextProvider>
+      <FavoritesContextProvider>
+        <LocationContextProvider>
+          <RestaurantContextProvider>
+            <Navigation />
+          </RestaurantContextProvider>
+        </LocationContextProvider>
+      </FavoritesContextProvider>
     </ThemeProvider>
   );
 }

@@ -6,6 +6,7 @@ import { SvgXml } from "react-native-svg";
 import star from "../../../../../assets/star";
 import open from "../../../../../assets/open";
 import { AppText as Text } from "./AppText";
+import { Favorite } from "./Favorite";
 
 const RestaurantCard = styled(Card)`
   background-color: ${({ theme }) => theme.colors.ui.white};
@@ -45,11 +46,13 @@ export const RestaurantCardComponent = ({
   isOpenNow,
   rating,
   placeId,
+  restaurant,
 }) => {
   const ratingArray = Array.from(new Array(Math.floor(rating)));
 
   return (
     <RestaurantCard elevation={5}>
+      <Favorite restaurant={restaurant} />
       <RestaurantCardCover key={name} source={{ uri: photos }} />
       <Info>
         <Text variant="label">{name}</Text>

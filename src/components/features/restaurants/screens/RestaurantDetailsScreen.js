@@ -52,6 +52,7 @@ export const RestaurantDetailsScreen = ({ route }) => {
         isOpenNow={restaurant.isOpenNow}
         rating={restaurant.rating}
         placeId={restaurant.placeId}
+        restaurant={restaurant}
       />
       <ScrollView>
         <Accordion categories={categories} title="Menu Overview" />
