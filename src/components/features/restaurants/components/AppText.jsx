@@ -30,12 +30,19 @@ font-size:${theme.fontSizes.body}
 font-weight:${theme.fontWeights.medium}
 `;
 
+const title = (theme) => `
+font-family:${theme.fonts.heading}
+font-size:${theme.fontSizes.h4}
+font-weight:${theme.fontWeights.bold}
+`;
+
 const variants = {
   body,
   label,
   caption,
   error,
   hint,
+  title,
 };
 
 export const AppText = styled.Text`

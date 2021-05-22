@@ -3,7 +3,6 @@ import React, { useContext } from "react";
 import { TouchableOpacity } from "react-native";
 import styled from "styled-components";
 import { FavoritesContext } from "../../../../services/favorites/FavoritesContext";
-import { restaurantsTransform } from "../../../../services/restaurants/RestaurantService";
 
 const FavoriteBtn = styled(TouchableOpacity)`
   position: absolute;

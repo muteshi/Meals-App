@@ -20,7 +20,7 @@ export const RestaurantScreen = (props) => {
 
   return (
     <Screen>
-      {loading && <Loader />}
+      <Loader isLoading={loading} />
       <SearchRestaurants
         isFavoritesToggled={isToggled}
         onFavoritesToggle={() => setIsToggled(!isToggled)}

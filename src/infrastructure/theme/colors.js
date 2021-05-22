@@ -9,6 +9,7 @@ export const colors = {
     secondary: "#757575",
     tertiary: "#F1F1F1",
     white: "#FFFFFF",
+    black: "#000",
     disabled: "#DEDEDE",
     error: "#D0421B",
     success: "#138000",
