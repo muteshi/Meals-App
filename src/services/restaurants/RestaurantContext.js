@@ -1,10 +1,4 @@
-import React, {
-  createContext,
-  useContext,
-  useEffect,
-  useMemo,
-  useState,
-} from "react";
+import React, { createContext, useContext, useEffect, useState } from "react";
 import { LocationContext } from "../location/LocationContext";
 import { restaurantsRequest, restaurantsTransform } from "./RestaurantService";
 
@@ -46,6 +40,7 @@ export const RestaurantContextProvider = ({ children }) => {
         restaurants,
         loading,
         error,
+        loadRestaurants,
       }}
     >
       {children}

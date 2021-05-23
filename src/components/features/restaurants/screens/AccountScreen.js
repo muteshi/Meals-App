@@ -6,6 +6,7 @@ import {
   Logo,
 } from "../../../../infrastructure/theme/bg";
 import { AppButton } from "../../../common/AppButton";
+import { FadeInView } from "../components/Animations/FadeAnimation";
 import { AppText } from "../components/AppText";
 
 export const AccountScreen = ({ navigation }) => {
@@ -21,22 +22,24 @@ export const AccountScreen = ({ navigation }) => {
         <Image source={require("../../../../../assets/logo.png")} />
       </Logo>
       <AppText variant="title">Meals To Go</AppText>
-      <AccountContainer>
-        <AppButton
-          title="Login"
-          icon="login"
-          iconColor="white"
-          iconSize={24}
-          onPress={goToLoginScreen}
-        />
-        <AppButton
-          title="Register"
-          icon="account"
-          iconColor="white"
-          iconSize={24}
-          onPress={goToRegisterScreen}
-        />
-      </AccountContainer>
+      <FadeInView>
+        <AccountContainer>
+          <AppButton
+            title="Login"
+            icon="login"
+            iconColor="white"
+            iconSize={24}
+            onPress={goToLoginScreen}
+          />
+          <AppButton
+            title="Register"
+            icon="account"
+            iconColor="white"
+            iconSize={24}
+            onPress={goToRegisterScreen}
+          />
+        </AccountContainer>
+      </FadeInView>
     </BackgroundImage>
   );
 };

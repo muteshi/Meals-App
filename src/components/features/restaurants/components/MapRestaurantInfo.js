@@ -3,6 +3,7 @@ import styled from "styled-components";
 import WebView from "react-native-webview";
 import { AppText } from "./AppText";
 import { Platform } from "react-native";
+import { Favorite } from "./Favorite";
 
 const CompactImage = styled.Image`
   border-radius: 10px;
@@ -28,6 +29,7 @@ export const MapRestaurantInfo = ({ restaurant, isMap }) => {
   const Image = isAndroid && isMap ? CompactWebview : CompactImage;
   return (
     <Item>
+      <Favorite restaurant={restaurant} />
       <Image source={{ uri: restaurant.photos[0] }} />
 
       <AppText center variant="caption" numberOfLines={3}>

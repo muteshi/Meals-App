@@ -7,6 +7,12 @@ const Separator = styled.View`
   height: 20px;
 `;
 
-export const ListItemSeparator = () => {
-  return <Separator />;
+const WhiteSeparator = styled.View`
+  background-color: ${({ theme }) => theme.colors.ui.white};
+  width: 100%;
+  height: 1px;
+`;
+
+export const ListItemSeparator = ({ isWhite }) => {
+  return isWhite ? <WhiteSeparator /> : <Separator />;
 };

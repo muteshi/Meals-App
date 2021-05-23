@@ -7,16 +7,16 @@ import { RestaurantContext } from "../../../../services/restaurants/RestaurantCo
 import { Screen } from "../../../../utils/Screen";
 import { Loader } from "../../../common/Loader";
 import { SearchRestaurants } from "../components/SearchRestaurants";
-import { useNavigation } from "@react-navigation/core";
 import { FavoritesContext } from "../../../../services/favorites/FavoritesContext";
 import { FavoritesBar } from "../components/FavoritesBar";
+import { LocationContext } from "../../../../services/location/LocationContext";
+import { FadeInView } from "../components/Animations/FadeAnimation";
 
-export const RestaurantScreen = (props) => {
+export const RestaurantScreen = ({ navigation }) => {
   const { favorites } = useContext(FavoritesContext);
+  const { search, keyword } = useContext(LocationContext);
   const { restaurants, loading, error } = useContext(RestaurantContext);
   const [isToggled, setIsToggled] = useState(false);
-
-  const navigation = useNavigation();
 
   return (
     <Screen>
@@ -31,6 +31,8 @@ export const RestaurantScreen = (props) => {
         data={restaurants}
         ItemSeparatorComponent={ListItemSeparator}
         keyExtractor={(item) => item.name}
+        refreshing={loading}
+        onRefresh={() => search(keyword)}
         renderItem={({ item }) => (
           <Pressable
             onPress={() =>
@@ -39,17 +41,19 @@ export const RestaurantScreen = (props) => {
               })
             }
           >
-            <RestaurantCardComponent
-              name={item.name}
-              icon={item.icon}
-              photos={item.photos[0]}
-              isClosedTemporarily={item.isClosedTemporarily}
-              address={item.vicinity}
-              isOpenNow={item.isOpenNow}
-              rating={item.rating}
-              placeId={item.placeId}
-              restaurant={item}
-            />
+            <FadeInView>
+              <RestaurantCardComponent
+                name={item.name}
+                icon={item.icon}
+                photos={item.photos[0]}
+                isClosedTemporarily={item.isClosedTemporarily}
+                address={item.vicinity}
+                isOpenNow={item.isOpenNow}
+                rating={item.rating}
+                placeId={item.placeId}
+                restaurant={item}
+              />
+            </FadeInView>
           </Pressable>
         )}
       />
