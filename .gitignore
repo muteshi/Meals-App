@@ -16,3 +16,5 @@ web-build/
 
 #firebase
 src/utils/firebase.js
+
+*/node_modules/**/*
