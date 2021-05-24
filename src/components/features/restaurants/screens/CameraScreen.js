@@ -34,11 +34,6 @@ export const CameraScreen = ({ navigation }) => {
       navigation.goBack();
     }
   };
-  //   console.log(hasPermis);
-
-  //   if (hasPermission === null) {
-  //     return <View />;
-  //   }
 
   if (hasPermission === false) {
     return <AppText variant="error">No access to camera</AppText>;
