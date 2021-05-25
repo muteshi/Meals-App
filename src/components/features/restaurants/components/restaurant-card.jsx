@@ -44,7 +44,7 @@ export const RestaurantCardComponent = ({
   isClosedTemporarily,
   address,
   isOpenNow,
-  rating,
+  rating = 1,
   placeId,
   restaurant,
 }) => {
