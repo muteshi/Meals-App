@@ -1,11 +1,19 @@
-import React from "react";
+import React, { useContext } from "react";
 import { ScrollView } from "react-native";
+import styled from "styled-components";
+import { CartContext } from "../../../../services/checkout/CardContext";
 import { Screen } from "../../../../utils/Screen";
 import { Accordion } from "../../../common/Accordion";
+import { AppButton } from "../../../common/AppButton";
 import { RestaurantCardComponent } from "../components/restaurant-card";
 
-export const RestaurantDetailsScreen = ({ route }) => {
+const OrderButtonContainer = styled.View`
+  align-items: center;
+`;
+
+export const RestaurantDetailsScreen = ({ route, navigation }) => {
   const { restaurant } = route.params;
+  const { addToCart } = useContext(CartContext);
   const categories = [
     {
       title: "Lunch",
@@ -57,6 +65,16 @@ export const RestaurantDetailsScreen = ({ route }) => {
       <ScrollView>
         <Accordion categories={categories} title="Menu Overview" />
       </ScrollView>
+      <OrderButtonContainer>
+        <AppButton
+          title="TODAY'S SPECIAL FOR KSH 899"
+          icon="cart"
+          onPress={() => {
+            addToCart({ item: "Todays' special", price: 899 }, restaurant);
+            navigation.navigate("Checkout");
+          }}
+        />
+      </OrderButtonContainer>
     </Screen>
   );
 };

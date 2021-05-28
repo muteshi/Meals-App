@@ -52,6 +52,7 @@ export const SettingScreen = ({ navigation }) => {
           )}
         </TouchableOpacity>
         <ListItemSeparator />
+        <Text variant="title">{user.name}</Text>
         <Text variant="label">{user.email}</Text>
         <ListItemSeparator />
       </AvatarBox>

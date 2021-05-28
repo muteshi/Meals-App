@@ -11,52 +11,75 @@ import { FavoritesContext } from "../../../../services/favorites/FavoritesContex
 import { FavoritesBar } from "../components/FavoritesBar";
 import { LocationContext } from "../../../../services/location/LocationContext";
 import { FadeInView } from "../components/Animations/FadeAnimation";
+import { AppText } from "../components/AppText";
+import styled from "styled-components";
 
 export const RestaurantScreen = ({ navigation }) => {
   const { favorites } = useContext(FavoritesContext);
-  const { search, keyword } = useContext(LocationContext);
-  const { restaurants, loading, error } = useContext(RestaurantContext);
+  const { search, keyword, error: locationError } = useContext(LocationContext);
+  const { restaurants, loading, error: restaurantEror } = useContext(
+    RestaurantContext
+  );
   const [isToggled, setIsToggled] = useState(false);
+
+  const hasError = !!locationError || !!restaurantEror;
+
+  const ErrorBox = styled(AppText)`
+    align-items: center;
+    margin-left: 10px;
+    margin-top: 10px;
+  `;
 
   return (
     <Screen>
-      <Loader isLoading={loading} />
       <SearchRestaurants
         isFavoritesToggled={isToggled}
         onFavoritesToggle={() => setIsToggled(!isToggled)}
       />
       {isToggled && <FavoritesBar favorites={favorites} />}
-
-      <FlatList
-        data={restaurants}
-        ItemSeparatorComponent={ListItemSeparator}
-        keyExtractor={(item) => item.name}
-        refreshing={loading}
-        onRefresh={() => search(keyword)}
-        renderItem={({ item }) => (
-          <Pressable
-            onPress={() =>
-              navigation.navigate("RestaurantDetails", {
-                restaurant: item,
-              })
-            }
-          >
-            <FadeInView>
-              <RestaurantCardComponent
-                name={item.name}
-                icon={item.icon}
-                photos={item.photos[0]}
-                isClosedTemporarily={item.isClosedTemporarily}
-                address={item.vicinity}
-                isOpenNow={item.isOpenNow}
-                rating={item.rating}
-                placeId={item.placeId}
-                restaurant={item}
-              />
-            </FadeInView>
-          </Pressable>
-        )}
-      />
+      {!loading ? (
+        <>
+          {hasError && (
+            <ErrorBox variant="error">
+              Something went wrong. Could not retrieve restaurant data
+            </ErrorBox>
+          )}
+          {!hasError && (
+            <FlatList
+              data={restaurants}
+              ItemSeparatorComponent={ListItemSeparator}
+              keyExtractor={(item) => item.name + item.placeId}
+              refreshing={loading}
+              onRefresh={() => search(keyword)}
+              renderItem={({ item }) => (
+                <Pressable
+                  onPress={() =>
+                    navigation.navigate("RestaurantDetails", {
+                      restaurant: item,
+                    })
+                  }
+                >
+                  <FadeInView>
+                    <RestaurantCardComponent
+                      name={item.name}
+                      icon={item.icon}
+                      photos={item.photos[0]}
+                      isClosedTemporarily={item.isClosedTemporarily}
+                      address={item.vicinity}
+                      isOpenNow={item.isOpenNow}
+                      rating={item.rating}
+                      placeId={item.placeId}
+                      restaurant={item}
+                    />
+                  </FadeInView>
+                </Pressable>
+              )}
+            />
+          )}
+        </>
+      ) : (
+        <Loader />
+      )}
     </Screen>
   );
 };

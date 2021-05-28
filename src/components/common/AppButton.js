@@ -10,6 +10,7 @@ const ButtonContainer = styled.TouchableOpacity`
   padding: ${({ theme }) => theme.sizes[1]};
   width: 300px;
   margin-vertical: ${({ theme }) => theme.sizes[0]};
+  border-radius: 5px;
 `;
 
 const TextContainer = styled.Text`

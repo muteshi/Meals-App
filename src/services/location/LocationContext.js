@@ -20,6 +20,7 @@ export const LocationContextProvider = ({ children }) => {
       .then(locationTransform)
       .then((result) => {
         setLoading(false);
+        setError(null);
         setLocation(result);
       })
       .catch((error) => {
