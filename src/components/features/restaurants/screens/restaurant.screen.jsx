@@ -14,6 +14,12 @@ import { FadeInView } from "../components/Animations/FadeAnimation";
 import { AppText } from "../components/AppText";
 import styled from "styled-components";
 
+const ErrorBox = styled(AppText)`
+  align-items: center;
+  margin-left: 10px;
+  margin-top: 10px;
+`;
+
 export const RestaurantScreen = ({ navigation }) => {
   const { favorites } = useContext(FavoritesContext);
   const { search, keyword, error: locationError } = useContext(LocationContext);
@@ -23,12 +29,6 @@ export const RestaurantScreen = ({ navigation }) => {
   const [isToggled, setIsToggled] = useState(false);
 
   const hasError = !!locationError || !!restaurantEror;
-
-  const ErrorBox = styled(AppText)`
-    align-items: center;
-    margin-left: 10px;
-    margin-top: 10px;
-  `;
 
   return (
     <Screen>

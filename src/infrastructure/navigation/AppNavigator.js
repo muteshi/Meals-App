@@ -8,8 +8,8 @@ import { RestaurantContextProvider } from "../../services/restaurants/Restaurant
 import { LocationContextProvider } from "../../services/location/LocationContext";
 import { FavoritesContextProvider } from "../../services/favorites/FavoritesContext";
 import { SettingsNavigator } from "./SettingsNavigator";
-import { CheckoutScreen } from "../../components/features/restaurants/screens/CheckoutScreen";
 import { CartContextProvider } from "../../services/checkout/CardContext";
+import { CheckoutNavigator } from "./CheckoutNavigator";
 
 const Tab = createBottomTabNavigator();
 
@@ -35,7 +35,7 @@ export const AppNavigator = () => {
               />
               <Tab.Screen
                 name="Checkout"
-                component={CheckoutScreen}
+                component={CheckoutNavigator}
                 options={{
                   tabBarIcon: ({ color, size }) => (
                     <Ionicons name="cart-outline" color={color} size={size} />

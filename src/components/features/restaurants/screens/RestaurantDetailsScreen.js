@@ -14,6 +14,7 @@ const OrderButtonContainer = styled.View`
 export const RestaurantDetailsScreen = ({ route, navigation }) => {
   const { restaurant } = route.params;
   const { addToCart } = useContext(CartContext);
+
   const categories = [
     {
       title: "Lunch",

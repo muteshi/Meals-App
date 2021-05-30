@@ -1,3 +1,4 @@
+import { useNavigation } from "@react-navigation/core";
 import React, { useContext, useEffect, useState } from "react";
 import MapView from "react-native-maps";
 import styled from "styled-components";
@@ -11,9 +12,10 @@ const MapContainer = styled(MapView)`
   width: 100%;
 `;
 
-const RestaurantMap = ({ navigation }) => {
+const RestaurantMap = () => {
   const { restaurants } = useContext(RestaurantContext);
   const { location } = useContext(LocationContext);
+  const navigation = useNavigation();
 
   const [latDelta, setLatDelta] = useState(0);
   const { viewport, lat, lng } = location;

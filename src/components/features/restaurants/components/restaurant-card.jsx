@@ -37,44 +37,46 @@ const Icons = styled.View`
   justify-content: space-between;
 `;
 
-export const RestaurantCardComponent = ({
-  name,
-  icon,
-  photos,
-  isClosedTemporarily,
-  address,
-  isOpenNow,
-  rating = 1,
-  placeId,
-  restaurant,
-}) => {
-  const ratingArray = Array.from(new Array(Math.floor(rating)));
+export const RestaurantCardComponent = React.memo(
+  ({
+    name,
+    icon,
+    photos,
+    isClosedTemporarily,
+    address,
+    isOpenNow,
+    rating = 1,
+    placeId,
+    restaurant,
+  }) => {
+    const ratingArray = Array.from(new Array(Math.floor(rating)));
 
-  return (
-    <RestaurantCard elevation={5}>
-      <Favorite restaurant={restaurant} />
-      <RestaurantCardCover key={name + address} source={{ uri: photos }} />
-      <Info>
-        <Text variant="label">{name}</Text>
-        <Icons>
-          <Rating>
-            {ratingArray.map((rate, index) => (
-              <SvgXml
-                xml={star}
-                width={20}
-                height={20}
-                key={`star-${placeId}-${index}`}
-              />
-            ))}
-          </Rating>
-          {isClosedTemporarily && (
-            <Text variant="error">Closed Temporarily</Text>
-          )}
-          {isOpenNow && <SvgXml xml={open} width={30} height={30} />}
-          <ImageIcon source={{ uri: icon }} />
-        </Icons>
-        <Text variant="caption">{address}</Text>
-      </Info>
-    </RestaurantCard>
-  );
-};
+    return (
+      <RestaurantCard elevation={5}>
+        <Favorite restaurant={restaurant} />
+        <RestaurantCardCover key={name + address} source={{ uri: photos }} />
+        <Info>
+          <Text variant="label">{name}</Text>
+          <Icons>
+            <Rating>
+              {ratingArray.map((rate, index) => (
+                <SvgXml
+                  xml={star}
+                  width={20}
+                  height={20}
+                  key={`star-${placeId}-${index}`}
+                />
+              ))}
+            </Rating>
+            {isClosedTemporarily && (
+              <Text variant="error">Closed Temporarily</Text>
+            )}
+            {isOpenNow && <SvgXml xml={open} width={30} height={30} />}
+            <ImageIcon source={{ uri: icon }} />
+          </Icons>
+          <Text variant="caption">{address}</Text>
+        </Info>
+      </RestaurantCard>
+    );
+  }
+);

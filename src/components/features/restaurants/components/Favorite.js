@@ -1,5 +1,5 @@
 import { AntDesign } from "@expo/vector-icons";
-import React, { useContext } from "react";
+import React, { useCallback, useContext, useMemo } from "react";
 import { TouchableOpacity } from "react-native";
 import styled from "styled-components";
 import { FavoritesContext } from "../../../../services/favorites/FavoritesContext";
@@ -11,13 +11,16 @@ const FavoriteBtn = styled(TouchableOpacity)`
   z-index: 9;
 `;
 
-export const Favorite = ({ restaurant }) => {
+export const Favorite = React.memo(({ restaurant }) => {
   const { favorites, addFavorite, removeFavorite } = useContext(
     FavoritesContext
   );
 
-  const isFavorite = favorites.find(
-    (favoriteRestaurant) => favoriteRestaurant.placeId === restaurant.placeId
+  const isFavorite = useCallback(
+    favorites.find(
+      (favoriteRestaurant) => favoriteRestaurant.placeId === restaurant.placeId
+    ),
+    [favorites]
   );
 
   return (
@@ -33,4 +36,4 @@ export const Favorite = ({ restaurant }) => {
       />
     </FavoriteBtn>
   );
-};
+});

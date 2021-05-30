@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useCallback, useContext, useState } from "react";
 import { Avatar, List, Button } from "react-native-paper";
 import { ScrollView, Text } from "react-native";
 import styled from "styled-components";
@@ -11,6 +11,7 @@ import { colors } from "../../../../infrastructure/theme/colors";
 import { AppTextInput as Input } from "../../../common/AppTextInput";
 import { ListItemSeparator } from "../../../common/ListItemSeparator";
 import { payRequest } from "../../../../services/checkout/CheckoutService";
+import { Loader } from "../../../common/Loader";
 
 export const PayButton = styled(Button).attrs({
   color: colors.brand.primary,
@@ -27,7 +28,7 @@ export const ClearButton = styled(Button).attrs({
   padding: ${(props) => props.theme.space[2]};
 `;
 
-const CartIconContainer = styled.View`
+export const CartIconContainer = styled.View`
   align-items: center;
   justify-content: center;
   flex: 1;
@@ -37,7 +38,7 @@ const CartTotalContainer = styled.View`
   margin-top: 10px;
 `;
 
-const CartIcon = styled(Avatar.Icon).attrs({
+export const CartIcon = styled(Avatar.Icon).attrs({
   size: 128,
 })`
   background-color: ${({ theme, bg }) => bg || theme.colors.brand.secondary};
@@ -47,18 +48,34 @@ const InputContainer = styled.View`
   align-items: center;
 `;
 
-export const CheckoutScreen = () => {
+export const CheckoutScreen = ({ navigation }) => {
   const [name, setName] = useState("");
   const [card, setCard] = useState(null);
+  const [loading, setLoading] = useState(false);
   const { cart, restaurant, sum, clearCart } = useContext(CartContext);
 
-  const onPay = () => {
+  const onPay = useCallback(() => {
     if (!card || !card.id) {
-      console.log("some error");
+      setLoading(false);
+      navigation.navigate("CheckoutError", {
+        error: "Please fill in valid credit card details",
+      });
       return;
     }
-    payRequest(card.id, sum, name);
-  };
+    payRequest(card.id, sum, name)
+      .then((result) => {
+        setLoading(false);
+        navigation.navigate("CheckoutSuccess");
+        clearCart();
+      })
+      .catch((err) => {
+        setLoading(false);
+        navigation.navigate("CheckoutError", {
+          error: err,
+        });
+        clearCart();
+      });
+  }, [card]);
 
   if (!cart.length || !restaurant)
     return (
@@ -82,11 +99,12 @@ export const CheckoutScreen = () => {
         placeId={restaurant.placeId}
         restaurant={restaurant}
       />
+      {loading && <Loader />}
       <ScrollView>
         <CartTotalContainer>
           <AppText variant="title">Your Order</AppText>
           <List.Section>
-            {cart.map(({ item, price, index }) => {
+            {cart.map(({ item, price }, index) => {
               return (
                 <List.Item
                   title={`${item} - ${price}`}
@@ -118,13 +136,32 @@ export const CheckoutScreen = () => {
             <ListItemSeparator />
           </InputContainer>
           {name.length > 0 && (
-            <CreditCardInput name={name} onSuccess={setCard} />
+            <CreditCardInput
+              name={name}
+              onSuccess={setCard}
+              onError={() => {
+                navigation.navigate("CheckoutError", {
+                  error: "Something went wrong processing your credit card",
+                });
+                clearCart();
+              }}
+            />
           )}
-          <PayButton icon="cash-usd" mode="contained" onPress={onPay}>
+          <PayButton
+            icon="cash-usd"
+            mode="contained"
+            onPress={onPay}
+            disabled={loading}
+          >
             Pay
           </PayButton>
           <ListItemSeparator />
-          <ClearButton icon="cart-off" mode="contained" onPress={clearCart}>
+          <ClearButton
+            icon="cart-off"
+            mode="contained"
+            onPress={clearCart}
+            disabled={loading}
+          >
             Clear Cart
           </ClearButton>
         </CartTotalContainer>
